@@ -6,7 +6,7 @@
 /*   By: mkamei <mkamei@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 12:42:48 by hyoshie           #+#    #+#             */
-/*   Updated: 2022/04/02 17:29:43 by mkamei           ###   ########.fr       */
+/*   Updated: 2022/04/06 15:06:07 by mkamei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,31 +18,40 @@ static int	status_with_errout(char *errmsg, const int status)
 	return (status);
 }
 
-static void	clear_htable(t_dict **htable, const size_t size)
+static void	dict_free(void *dict)
+{
+	if (dict == NULL)
+		return ;
+	free(((t_dict *)dict)->key);
+	free(((t_dict *)dict)->value);
+	free(dict);
+}
+
+static void	clear_htable(t_dclist **htable, const size_t size)
 {
 	size_t	i;
 
 	i = 0;
 	while (i < size)
 	{
-		dict_clear(htable[i]);
+		dclst_clear(&htable[i], dict_free);
 		i++;
 	}
 	free(htable);
 }
 
-static t_dict	**init_htable(void)
+static t_dclist	**init_htable(void)
 {
-	size_t	i;
-	t_dict	**htable;
+	size_t		i;
+	t_dclist	**htable;
 
-	htable = (t_dict **)malloc(sizeof(t_dict *) * HTABLE_SIZE);
+	htable = (t_dclist **)malloc(sizeof(t_dclist *) * HTABLE_SIZE);
 	if (htable == NULL)
 		return (NULL);
 	i = 0;
 	while (i < HTABLE_SIZE)
 	{
-		htable[i] = dict_new(NULL, NULL);
+		htable[i] = dclst_new(NULL);
 		if (htable[i] == NULL)
 		{
 			clear_htable(htable, i);
@@ -55,15 +64,15 @@ static t_dict	**init_htable(void)
 
 int	main(void)
 {
-	t_dict		**htable;
+	t_dclist	**htable;
 	t_status	status;
 
 	htable = init_htable();
 	if (htable == NULL)
 		return (status_with_errout(strerror(errno), 1));
-	status = store_htable(htable);
+	status = store_to_htable(htable);
 	if (status == SUCCESS)
-		status = search_htable(htable);
+		status = search_from_htable(htable);
 	clear_htable(htable, HTABLE_SIZE);
 	if (status == ERROR)
 		return (status_with_errout(strerror(errno), 1));

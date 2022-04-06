@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   put.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkamei <mkamei@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/10 17:02:04 by yshimazu          #+#    #+#             */
-/*   Updated: 2022/04/03 13:44:54 by mkamei           ###   ########.fr       */
+/*   Created: 2022/04/06 13:53:12 by mkamei            #+#    #+#             */
+/*   Updated: 2022/04/06 14:38:16 by mkamei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+void	ft_putstr_fd(char *s, int fd)
 {
-	size_t			i;
-	unsigned char	*u_s1;
-	unsigned char	*u_s2;
+	if (!s)
+		return ;
+	write(fd, s, ft_strlen(s));
+}
 
-	u_s1 = (unsigned char *)s1;
-	u_s2 = (unsigned char *)s2;
-	i = 0;
-	while ((u_s1[i] != 0 && u_s2[i] != 0))
-	{
-		if (u_s1[i] != u_s2[i])
-			return (u_s1[i] - u_s2[i]);
-		i++;
-	}
-	return (u_s1[i] - u_s2[i]);
+void	ft_putendl_fd(char *s, int fd)
+{
+	if (!s)
+		return ;
+	ft_putstr_fd(s, fd);
+	write(fd, "\n", 1);
 }

@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llst_isempty.c                                     :+:      :+:    :+:   */
+/*   dclst_popdel_next.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkamei <mkamei@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/03 12:00:29 by mkamei            #+#    #+#             */
-/*   Updated: 2022/04/03 12:00:52 by mkamei           ###   ########.fr       */
+/*   Created: 2022/04/05 12:29:16 by mkamei            #+#    #+#             */
+/*   Updated: 2022/04/06 11:58:26 by mkamei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "llst.h"
+#include "dclist.h"
 
-bool	llst_isempty(t_llst *lst)
+t_dclist	*dclst_popdel_next(t_dclist *lst, void (*del)(void *))
 {
-	return (lst == lst->next);
+	t_dclist	*next;
+
+	if (lst == NULL)
+		return (NULL);
+	next = lst->next;
+	dclst_pop(lst);
+	dclst_delone(lst, del);
+	return (next);
 }

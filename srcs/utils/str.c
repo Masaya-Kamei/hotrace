@@ -1,30 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   str.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkamei <mkamei@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/07 12:19:01 by mkamei            #+#    #+#             */
-/*   Updated: 2022/04/03 17:27:19 by mkamei           ###   ########.fr       */
+/*   Created: 2022/04/06 13:54:57 by mkamei            #+#    #+#             */
+/*   Updated: 2022/04/06 14:42:31 by mkamei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "libft.h"
-#include <stddef.h>
+#include "util.h"
 
-char	*ft_strchr(const char *s, int c)
+size_t	ft_strlen(const char *str)
 {
-	int	i;
+	size_t	cnt;
 
+	cnt = 0;
+	while (*str++)
+		cnt++;
+	return (cnt);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t			i;
+	unsigned char	*u_s1;
+	unsigned char	*u_s2;
+
+	u_s1 = (unsigned char *)s1;
+	u_s2 = (unsigned char *)s2;
 	i = 0;
-	while (s[i])
+	while ((u_s1[i] != 0 && u_s2[i] != 0))
 	{
-		if (s[i] == (unsigned char)c)
-			return ((char *)&s[i]);
+		if (u_s1[i] != u_s2[i])
+			return (u_s1[i] - u_s2[i]);
 		i++;
 	}
-	if (s[i] == '\0' && c == '\0')
-		return ((char *)&s[i]);
-	return (NULL);
+	return (u_s1[i] - u_s2[i]);
 }

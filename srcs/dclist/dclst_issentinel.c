@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llst_delone.c                                      :+:      :+:    :+:   */
+/*   dclst_is_sentinel.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkamei <mkamei@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/03 17:10:16 by mkamei            #+#    #+#             */
-/*   Updated: 2022/04/03 17:10:44 by mkamei           ###   ########.fr       */
+/*   Created: 2022/04/05 09:59:47 by mkamei            #+#    #+#             */
+/*   Updated: 2022/04/06 12:01:09 by mkamei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "llst.h"
+#include "dclist.h"
 
-bool	llst_delone(t_llst *elem)
+bool	dclst_issentinel(t_dclist *lst, t_dclist *target)
 {
-	t_llst	*front;
-	t_llst	*back;
-
-	if (!elem || elem->next == elem)
-		return (false);
-	front = elem->next;
-	back = elem->prev;
-	back->next = front;
-	front->prev = back;
-	free(elem);
-	return (true);
+	return (lst == target);
 }

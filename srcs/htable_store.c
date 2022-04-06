@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   store_htable.c                                     :+:      :+:    :+:   */
+/*   htable_store.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkamei <mkamei@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 17:10:09 by mkamei            #+#    #+#             */
-/*   Updated: 2022/04/03 12:11:30 by mkamei           ###   ########.fr       */
+/*   Updated: 2022/04/06 15:01:43 by mkamei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,21 @@ static t_status	status_with_free(void *p1, void *p2, const t_status status)
 	return (status);
 }
 
-static t_status	hash_add(t_dict **htable, char *key, char *value)
+static t_status	store_dict_to_htable(t_dclist **htable, char *key, char *value)
 {
 	const size_t	htable_index = hash_func(key);
 	t_dict			*hit_dict;
-	t_dict			*new_dict;
+	t_dclist		*new_lst;
 
-	hit_dict = dict_search_item(key, htable[htable_index]);
+	hit_dict = search_dict(htable[htable_index], key);
 	if (hit_dict == NULL)
 	{
-		new_dict = dict_new(key, value);
-		if (new_dict == NULL)
+		new_lst = dclst_new_size(sizeof(t_dict));
+		if (new_lst == NULL)
 			return (ERROR);
-		dict_addback(htable[htable_index], new_dict);
+		((t_dict *)new_lst->p)->key = key;
+		((t_dict *)new_lst->p)->value = value;
+		dclst_addback(htable[htable_index], new_lst);
 	}
 	else
 	{
@@ -42,7 +44,7 @@ static t_status	hash_add(t_dict **htable, char *key, char *value)
 	return (SUCCESS);
 }
 
-t_status	store_htable(t_dict **htable)
+t_status	store_to_htable(t_dclist **htable)
 {
 	char	*line;
 	char	*key;
@@ -63,7 +65,7 @@ t_status	store_htable(t_dict **htable)
 			key = line;
 		else
 		{
-			if (hash_add(htable, key, line) == ERROR)
+			if (store_dict_to_htable(htable, key, line) == ERROR)
 				return (status_with_free(key, line, ERROR));
 			key = NULL;
 		}

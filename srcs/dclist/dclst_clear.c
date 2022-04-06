@@ -1,18 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llst_addback.c                                     :+:      :+:    :+:   */
+/*   dclst_clear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkamei <mkamei@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/22 01:01:05 by yshimazu          #+#    #+#             */
-/*   Updated: 2022/04/03 11:44:53 by mkamei           ###   ########.fr       */
+/*   Created: 2022/04/04 14:27:27 by mkamei            #+#    #+#             */
+/*   Updated: 2022/04/05 13:05:25 by mkamei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "llst.h"
+#include "dclist.h"
 
-void	llst_addback(t_llst *head, t_llst *new)
+void	dclst_clear(t_dclist **lst, void (*del)(void *))
 {
-	llst_insert(head->prev, new);
+	t_dclist	*sentinel;
+	t_dclist	*current;
+	t_dclist	*next;
+
+	if (lst == NULL || *lst == NULL)
+		return ;
+	sentinel = *lst;
+	current = (*lst)->next;
+	while (current != sentinel)
+	{
+		next = current->next;
+		dclst_delone(current, del);
+		current = next;
+	}
+	dclst_delone(sentinel, del);
+	*lst = NULL;
 }

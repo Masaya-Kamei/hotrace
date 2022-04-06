@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llst_new.c                                         :+:      :+:    :+:   */
+/*   dclst_new_size.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkamei <mkamei@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/22 00:56:13 by yshimazu          #+#    #+#             */
-/*   Updated: 2022/04/03 16:44:03 by mkamei           ###   ########.fr       */
+/*   Created: 2022/04/05 09:16:30 by mkamei            #+#    #+#             */
+/*   Updated: 2022/04/05 09:18:47 by mkamei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "llst.h"
+#include "dclist.h"
 
-t_llst	*llst_new(size_t len)
+t_dclist	*dclst_new_size(size_t size)
 {
-	t_llst	*elem;
+	t_dclist	*new_lst;
 
-	elem = (t_llst *)malloc(sizeof(t_llst));
-	if (!elem)
+	new_lst = (t_dclist *)malloc(sizeof(t_dclist));
+	if (new_lst == NULL)
 		return (NULL);
-	elem->len = len;
-	elem->prev = elem;
-	elem->next = elem;
-	return (elem);
+	new_lst->p = malloc(size);
+	if (new_lst->p == NULL)
+	{
+		free(new_lst);
+		return (NULL);
+	}
+	new_lst->prev = new_lst;
+	new_lst->next = new_lst;
+	return (new_lst);
 }

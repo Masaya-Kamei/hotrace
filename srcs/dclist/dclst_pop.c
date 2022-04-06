@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   dclst_pop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkamei <mkamei@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/10 17:22:59 by hyoshie           #+#    #+#             */
-/*   Updated: 2022/04/03 13:45:44 by mkamei           ###   ########.fr       */
+/*   Created: 2022/04/05 10:22:38 by mkamei            #+#    #+#             */
+/*   Updated: 2022/04/05 10:25:58 by mkamei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "dclist.h"
 
-# include <stdbool.h>
-# include <stddef.h>
-# include <stdlib.h>
-# include <unistd.h>
-
-size_t	ft_strlen(const char *str);
-int		ft_strcmp(const char *s1, const char *s2);
-void	ft_putstr_fd(char *s, int fd);
-void	ft_putendl_fd(char *s, int fd);
-
-#endif
+t_dclist	*dclst_pop(t_dclist *lst)
+{
+	dclst_link(lst->prev, lst->next);
+	lst->prev = lst;
+	lst->next = lst;
+	return (lst);
+}

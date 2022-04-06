@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_strlcpy.c                                       :+:      :+:    :+:   */
+/*   dclst_add_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkamei <mkamei@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/06 17:12:00 by mkamei            #+#    #+#             */
-/*   Updated: 2022/04/03 19:01:41 by mkamei           ###   ########.fr       */
+/*   Created: 2022/04/04 14:15:58 by mkamei            #+#    #+#             */
+/*   Updated: 2022/04/04 14:42:30 by mkamei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "dclist.h"
 
-void	my_strlcpy(char *dst, const char *src, size_t size)
+void	dclst_addback(t_dclist *lst, t_dclist *new_lst)
 {
-	size_t	i;
-
-	if (size == 0)
+	if (new_lst == NULL)
 		return ;
-	i = 0;
-	while (src[i] && i < (size - 1))
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
+	dclst_link(lst->prev, new_lst);
+	dclst_link(new_lst, lst);
 }

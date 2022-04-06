@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dict_addback.c                                     :+:      :+:    :+:   */
+/*   dclst_new.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkamei <mkamei@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/10 17:00:56 by yshimazu          #+#    #+#             */
-/*   Updated: 2022/04/03 13:36:29 by mkamei           ###   ########.fr       */
+/*   Created: 2022/04/04 16:41:21 by mkamei            #+#    #+#             */
+/*   Updated: 2022/04/04 16:43:54 by mkamei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dict.h"
+#include "dclist.h"
 
-bool	dict_addback(t_dict *head, t_dict *new)
+t_dclist	*dclst_new(void *p)
 {
-	if (!head || !new)
-		return (false);
-	new->next = head;
-	new->prev = head->prev;
-	head->prev->next = new;
-	head->prev = new;
-	return (true);
+	t_dclist	*new_lst;
+
+	new_lst = (t_dclist *)malloc(sizeof(t_dclist));
+	if (new_lst == NULL)
+		return (NULL);
+	new_lst->p = p;
+	new_lst->prev = new_lst;
+	new_lst->next = new_lst;
+	return (new_lst);
 }

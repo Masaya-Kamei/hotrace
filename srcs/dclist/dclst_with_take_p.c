@@ -1,29 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dict_search_item.c                                 :+:      :+:    :+:   */
+/*   dclst_with_take_p.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkamei <mkamei@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/17 17:37:36 by hyoshie           #+#    #+#             */
-/*   Updated: 2022/04/03 13:36:53 by mkamei           ###   ########.fr       */
+/*   Created: 2022/04/06 11:58:29 by mkamei            #+#    #+#             */
+/*   Updated: 2022/04/06 11:59:39 by mkamei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dict.h"
+#include "dclist.h"
 
-t_dict	*dict_search_item(char *key, t_dict *dict)
+t_dclist	*dclst_with_take_p(t_dclist *lst, void **p_ptr)
 {
-	t_dict	*ptr;
-
-	if (key == NULL || dict == NULL)
-		return (NULL);
-	ptr = dict->next;
-	while (ptr != dict)
-	{
-		if (ft_strcmp(key, ptr->key) == 0)
-			return (ptr);
-		ptr = ptr->next;
-	}
-	return (NULL);
+	*p_ptr = lst->p;
+	return (lst);
 }

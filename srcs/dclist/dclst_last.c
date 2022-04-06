@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dict_clear.c                                       :+:      :+:    :+:   */
+/*   dclst_last.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkamei <mkamei@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/10 17:01:06 by yshimazu          #+#    #+#             */
-/*   Updated: 2022/04/03 13:36:24 by mkamei           ###   ########.fr       */
+/*   Created: 2022/04/04 14:52:35 by mkamei            #+#    #+#             */
+/*   Updated: 2022/04/04 14:52:56 by mkamei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dict.h"
+#include "dclist.h"
 
-void	dict_clear(t_dict *head)
+t_dclist	*dclst_last(t_dclist *lst)
 {
-	t_dict	*p;
-
-	p = head->next;
-	while (p != head)
-	{
-		p = p->next;
-		free(p->prev->key);
-		free(p->prev->value);
-		free (p->prev);
-	}
-	free (head);
+	return (lst->prev);
 }

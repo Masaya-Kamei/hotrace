@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llst_insert.c                                      :+:      :+:    :+:   */
+/*   dclst_delone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkamei <mkamei@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/22 00:58:56 by yshimazu          #+#    #+#             */
-/*   Updated: 2022/04/03 11:48:58 by mkamei           ###   ########.fr       */
+/*   Created: 2022/04/04 14:48:51 by mkamei            #+#    #+#             */
+/*   Updated: 2022/04/04 14:51:14 by mkamei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "llst.h"
+#include "dclist.h"
 
-void	llst_insert(t_llst *lst, t_llst *new)
+void	dclst_delone(t_dclist *lst, void (*del)(void *))
 {
-	llst_link(new, lst->next);
-	llst_link(lst, new);
+	if (lst == NULL)
+		return ;
+	if (del)
+		del(lst->p);
+	free(lst);
 }
